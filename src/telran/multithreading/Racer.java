@@ -6,13 +6,13 @@ int distance;
 int delayTime;
 int minDelay = 2;
 int maxDelay = 5;
+static int isFinish = -1;
 
 
 
 	public Racer(int racerNumber, int distance) {
 		this.racerNumber = racerNumber;
 		this.distance = distance;
-		this.delayTime = rnd(minDelay, maxDelay);	
 	}
 			
 	public static int rnd(int min, int max)	{
@@ -23,11 +23,15 @@ int maxDelay = 5;
 	public void run () {
 		try {
 			for (int i = 0; i < distance; i++) {
-				sleep(delayTime);
-			}
+				Thread.sleep((long) rnd(minDelay, maxDelay));
+		}
 			
-		} catch (Exception e) {
+		} catch (InterruptedException e) {
 			e.printStackTrace();
+		}
+		System.out.printf("Racer # %d finished running \n", racerNumber);
+		if (isFinish == -1) {
+			isFinish = racerNumber;
 		}
 		 
 	}
