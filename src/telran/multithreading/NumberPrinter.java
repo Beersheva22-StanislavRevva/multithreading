@@ -21,7 +21,7 @@ public class NumberPrinter extends Thread {
 	public void run() {
 		for (int i = 0; i < quantity / portion; i++) {
 			try {
-				sleep(100);
+				sleep(Long.MAX_VALUE);
 			} catch (InterruptedException e) {
 				System.out.println(String.format("%d", printNumber).repeat(portion));
 				System.out.printf("\n");
