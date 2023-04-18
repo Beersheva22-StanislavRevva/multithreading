@@ -4,6 +4,7 @@ public class Printer extends Thread {
 
 private String str;
 private int nRuns;
+ 
 
 public Printer(String str, int nRuns) {
 	this.str = str;
