@@ -14,7 +14,6 @@ import telran.view.*;
 public class RaceAppl {
 	
 	public static void main (String [] args) {
-		
 		InputOutput io = new StandardInputOutput();
 		Menu menu = new Menu("Racing", Item.of("Start Racing", RaceAppl::startRace), Item.of("Exit", n -> n.writeLine("Good buy"), true));
 		menu.perform(io);
@@ -33,8 +32,10 @@ public class RaceAppl {
 		}
 		List<Racer> racerList = new ArrayList<Racer>();
 		long res;
+		Instant start = Instant.now();
 		for (int i = 1; i <= quantity; i++) {
 			Racer racer = new Racer(i, distance);
+			racer.setStart(start);
 			racerList.add(racer);
 			racer.start();
 					}

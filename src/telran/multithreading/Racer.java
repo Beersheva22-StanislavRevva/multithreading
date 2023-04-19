@@ -2,6 +2,8 @@ package telran.multithreading;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Racer extends Thread {
@@ -10,7 +12,10 @@ int distance;
 int delayTime;
 int minDelay = 2;
 int maxDelay = 5;
+Instant start;
+long resTime;
 static AtomicInteger isFinish = new AtomicInteger(-1);
+static List<Racer> list = new ArrayList<>(); 
 
 
 
@@ -24,8 +29,11 @@ static AtomicInteger isFinish = new AtomicInteger(-1);
 		return (int) (Math.random() * ++max) + min;
 	}
 	
+	public void setStart(Instant start) {
+		this.start = start;
+	}
+	
 	public void run () {
-		Instant start = Instant.now();
 		try {
 			for (int i = 0; i < distance; i++) {
 				Thread.sleep((long) rnd(minDelay, maxDelay));
@@ -34,10 +42,15 @@ static AtomicInteger isFinish = new AtomicInteger(-1);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		Object res = ChronoUnit.MILLIS.between(start, Instant.now());
-		System.out.printf("Racer # %d finished running \n", racerNumber);
-		isFinish.compareAndExchange(-1, racerNumber);
+		
+		this.resTime = resTime();
+			System.out.printf("Racer # %d finished running, time %d \n", racerNumber, resTime);
+			isFinish.compareAndExchange(-1, racerNumber);
 		}
+
+	synchronized private long resTime() {
+		return ChronoUnit.MILLIS.between(start, Instant.now());
+	}
 		 
 	}
 
