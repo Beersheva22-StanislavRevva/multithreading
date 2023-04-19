@@ -46,7 +46,7 @@ public class RaceAppl {
 			}
 		}
 			
-		io.writeLine(String.format("Winner is - racer #%d", Racer.isFinish));
+		io.writeLine(String.format("Winner is - racer #%d", Racer.isFinish.get()));
 	}
 
 }

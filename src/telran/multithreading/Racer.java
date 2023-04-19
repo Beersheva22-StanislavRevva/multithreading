@@ -1,12 +1,16 @@
 package telran.multithreading;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Racer extends Thread {
 int racerNumber;
 int distance;
 int delayTime;
 int minDelay = 2;
 int maxDelay = 5;
-static int isFinish = -1;
+static AtomicInteger isFinish = new AtomicInteger(-1);
 
 
 
@@ -21,6 +25,7 @@ static int isFinish = -1;
 	}
 	
 	public void run () {
+		Instant start = Instant.now();
 		try {
 			for (int i = 0; i < distance; i++) {
 				Thread.sleep((long) rnd(minDelay, maxDelay));
@@ -29,11 +34,11 @@ static int isFinish = -1;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		Object res = ChronoUnit.MILLIS.between(start, Instant.now());
 		System.out.printf("Racer # %d finished running \n", racerNumber);
-		if (isFinish == -1) {
-			isFinish = racerNumber;
+		isFinish.compareAndExchange(-1, racerNumber);
 		}
 		 
 	}
 
-}
+
