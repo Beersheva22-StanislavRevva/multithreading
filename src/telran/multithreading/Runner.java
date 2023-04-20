@@ -28,12 +28,13 @@ public class Runner extends Thread {
 		}
 		
 		
-		synchronized (race){
+		race.lock.lock();
+		try {
 			finishTime = Instant.now();
-			
 			finishRace();
-		} 
-		
+			} finally {
+				race.lock.unlock();
+			}
 	}
 	private void finishRace() {
 		race.getResultsTable().add(this);
