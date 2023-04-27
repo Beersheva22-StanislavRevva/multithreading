@@ -1,21 +1,24 @@
 package telran.multithreading;
 
-import telran.multithreading.producers.Reciever;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
+import telran.multithreading.consumers.Receiver;
 import telran.multithreading.producers.Sender;
 
-public class SenderRecieversAppl {
+public class SenderReceiversAppl {
 
-	private static final int N_MESSAGES = 21;
-	private static final int N_RECIEVERS = 10;
+	private static final int N_MESSAGES = 20;
+	private static final int N_RECEIVERS = 10;
 
 	public static void main(String[] args) throws InterruptedException {
-		MessageBox messageBox1 = new MessageBox();
-		MessageBox messageBox2 = new MessageBox();
-		Sender sender = new Sender(messageBox1, messageBox2, N_MESSAGES);
+		BlockingQueue<String> messageBox = new LinkedBlockingQueue<>(1);
+		Sender sender = new Sender(messageBox, N_MESSAGES);
 		sender.start();
-		for(int i = 0; i < N_RECIEVERS; i++) {
-			new Reciever(i % 2 == 0 ? messageBox2 : messageBox1).start();
+		for(int i = 0; i < N_RECEIVERS; i++) {
+			new Receiver(messageBox).start();
 		}
+		Thread.sleep(100);
 		sender.join();
 
 	}
