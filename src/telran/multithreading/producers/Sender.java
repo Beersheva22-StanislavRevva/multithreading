@@ -3,6 +3,7 @@ package telran.multithreading.producers;
 import java.util.concurrent.BlockingQueue;
 
 import telran.multithreading.MessageBox;
+import telran.multithreading.util.MyLinkedBlockingQueue;
 
 public class Sender extends Thread {
 private BlockingQueue<String> messageBox;
@@ -17,7 +18,6 @@ public void run() {
 		try {
 			messageBox.put("message" + i);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

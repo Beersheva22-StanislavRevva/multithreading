@@ -5,6 +5,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import telran.multithreading.consumers.Receiver;
 import telran.multithreading.producers.Sender;
+import telran.multithreading.util.MyLinkedBlockingQueue;
 
 public class SenderReceiversAppl {
 
@@ -12,7 +13,7 @@ public class SenderReceiversAppl {
 	private static final int N_RECEIVERS = 10;
 
 	public static void main(String[] args) throws InterruptedException {
-		BlockingQueue<String> messageBox = new LinkedBlockingQueue<>(1);
+		BlockingQueue<String> messageBox = new LinkedBlockingQueue<String>(1);
 		Sender sender = new Sender(messageBox, N_MESSAGES);
 		sender.start();
 		for(int i = 0; i < N_RECEIVERS; i++) {

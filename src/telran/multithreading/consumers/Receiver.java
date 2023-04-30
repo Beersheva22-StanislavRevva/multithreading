@@ -3,6 +3,7 @@ package telran.multithreading.consumers;
 import java.util.concurrent.BlockingQueue;
 
 import telran.multithreading.MessageBox;
+import telran.multithreading.util.MyLinkedBlockingQueue;
 
 public class Receiver extends Thread {
  private BlockingQueue<String> messageBox;
